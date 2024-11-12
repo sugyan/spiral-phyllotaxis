@@ -4,16 +4,14 @@ import { PHI } from "./constants";
 
 function App() {
   const [numLeaves, setNumLeaves] = useState(250);
-  const [angle, setAngle] = useState((2 * Math.PI) / (PHI + 1));
+  const [angle, setAngle] = useState((Math.PI * 2) / (PHI + 1));
   return (
-    <>
-      <div className="flex flex-col md:flex-row h-screen">
-        <div className="flex-1 flex justify-center items-center bg-gray-100 md:h-full">
-          <div className="w-full h-full md:w-[calc(100vh)] md:h-[calc(100vh)] bg-blue-300 max-w-full max-h-full">
-            <ThreeScene numLeaves={numLeaves} angle={angle} />
-          </div>
+    <div className="h-screen">
+      <div className="flex flex-col md:flex-row h-full">
+        <div className="flex-1">
+          <ThreeScene numLeaves={numLeaves} angle={angle} />
         </div>
-        <div className="w-full md:w-1/4 lg:w-1/4 min-w-[200px] p-4 bg-gray-200">
+        <div className="h-40 md:h-full md:w-96 p-4 bg-gray-200 flex-shrink-0">
           <label htmlFor="num-leaves">
             Number of leaves: <code>{numLeaves}</code>
           </label>
@@ -29,11 +27,11 @@ function App() {
             className="w-full"
           />
           <label htmlFor="angle">
-            Angle: <code>{angle.toFixed(4)}</code>
+            Angle: <code>{angle.toFixed(6)}</code>
           </label>
           <input
             type="range"
-            id="num-leaves"
+            id="angle"
             min="0"
             max={Math.PI}
             value={angle}
@@ -43,9 +41,41 @@ function App() {
             }}
             className="w-full"
           />
+          <div className="flex justify-between">
+            <button
+              className="rounded border border-gray-500 px-4"
+              onClick={() => setAngle((Math.PI * 2) / 5)}
+            >
+              2π/5
+            </button>
+            <button
+              className="rounded border border-gray-500 px-4"
+              onClick={() => setAngle((Math.PI * 2) / 4)}
+            >
+              2π/4
+            </button>
+            <button
+              className="rounded border border-gray-500 px-4"
+              onClick={() => setAngle((Math.PI * 2) / 3)}
+            >
+              2π/3
+            </button>
+            <button
+              className="rounded border border-gray-500 px-4"
+              onClick={() => setAngle((Math.PI * 2) / (PHI + 1))}
+            >
+              2π/(φ+1)
+            </button>
+            <button
+              className="rounded border border-gray-500 px-4"
+              onClick={() => setAngle((Math.PI * 2) / 2)}
+            >
+              π
+            </button>
+          </div>
         </div>
-      </div>{" "}
-    </>
+      </div>
+    </div>
   );
 }
 

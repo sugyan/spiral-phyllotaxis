@@ -93,6 +93,18 @@ const ThreeScene = ({
     cube.position.set(0, 4.5, 0);
     scene.add(cube);
 
+    // handle resize
+    const resizeObserver = new ResizeObserver(() => {
+      if (!containerRef.current) return;
+      const height = containerRef.current.clientHeight;
+      const width = containerRef.current.clientWidth;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    });
+    resizeObserver.observe(containerRef.current);
+
+    // animation
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
@@ -102,6 +114,7 @@ const ThreeScene = ({
 
     const current = containerRef.current;
     return () => {
+      resizeObserver.disconnect();
       current.removeChild(renderer.domElement);
       renderer.dispose();
       sceneRef.current = new THREE.Scene();
@@ -121,7 +134,7 @@ const ThreeScene = ({
     // draw new leaves
     drawLeaves();
   }, [numLeaves, angle, drawLeaves]);
-  return <div className="h-full w-full" ref={containerRef} />;
+  return <div className="h-full bg-black" ref={containerRef} />;
 };
 
 export default ThreeScene;
